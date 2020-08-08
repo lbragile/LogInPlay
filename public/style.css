@@ -15,3 +15,44 @@ button {
   display: block;
   margin: auto;
 }
+
+#board {
+  width: 800px;
+  margin: 10px auto;
+  background: red;
+  border: 1px solid black;
+  position: relative;
+}
+
+.square {
+  width: 100px;
+  height: 100px;
+}
+
+.dark {
+  background: rgb(19, 19, 19);
+}
+
+.light {
+  background: rgb(241, 241, 241);
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.piece {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.red {
+  background: red;
+}
+
+.green {
+  background: green;
+}

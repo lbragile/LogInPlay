@@ -1,0 +1,16 @@
+{
+  "name": "client-server",
+  "version": "1.0.0",
+  "description": "Server for many clients to connect to and play a game",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lior Bragilevsky",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4",
+    "socket.io": "^2.3.0"
+  }
+}
