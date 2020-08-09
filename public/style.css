@@ -47,6 +47,7 @@ input {
   height: 80px;
   border-radius: 50%;
   position: absolute;
+  display: none;
 }
 
 .piece:hover {

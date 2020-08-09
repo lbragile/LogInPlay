@@ -9,14 +9,20 @@ function boardInit(color) {
     if ((row + col) % 2) {
       counter++;
       if (i < 24) {
-        let first_piece = $(`#${color.first}-${counter}`);
-        first_piece.css({ top: row * 100 + offset, left: col * 100 + offset });
+        let first_piece = $(`#red-${counter}`);
+        first_piece.css({
+          top: row * 100 + offset,
+          left: col * 100 + offset,
+        });
       } else if (i > 39) {
-        let second_piece = $(`#${color.second}-${counter - 20}`);
+        let second_piece = $(`#green-${counter - 20}`);
         second_piece.css({ top: row * 100 + offset, left: col * 100 + offset });
       }
     }
   }
+
+  $(`.${color.first}`).css({ border: "2px solid yellow" }); // indicate which user is which with a border
+  $(".piece").show();
 }
 
 // move functionality
@@ -57,24 +63,21 @@ $button.on("click", () => {
   socket.emit("search", socket.id);
 });
 
-boardInit({ first: "red", second: "green" }); // display something before an event happens
-
-socket.on("found", (message) => {
+socket.on("found", (data) => {
   $button.hide();
   let color = { first: "red", second: "green" }; // default values
 
-  if (message.includes("green")) {
+  if (data.message.includes("green")) {
     color.first = "green";
     color.second = "red";
   }
 
   boardInit(color);
-  makeMove("green");
-  // alert(message);
-});
+  makeMove(color.first);
 
-// var green_move = true,
-//   red_move = false;
+  // alert(message);
+  socket.emit("join", data.game_num); // join a room
+});
 
 $(".piece").on("mouseup", function () {
   let piece_coords = [];
@@ -97,13 +100,5 @@ socket.on("position", (data) => {
       top: element.top,
       left: element.left,
     });
-  });
-
-  let degrees = 180;
-  $("#board").css({
-    "-webkit-transform": "rotate(" + degrees + "deg)",
-    "-moz-transform": "rotate(" + degrees + "deg)",
-    "-ms-transform": "rotate(" + degrees + "deg)",
-    transform: "rotate(" + degrees + "deg)",
   });
 });
