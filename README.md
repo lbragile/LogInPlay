@@ -6,7 +6,7 @@ Attempt at making client-server communication using NodeJS and socket.io. The lo
 
 ## Current Stage
 
-<img src="checkers.gif" alt="checkmate" style="float: left; zoom:100%;" />
+<img src="checkers.gif" alt="demo of checkers game" style="float: left; zoom:100%;" />
 
 ## Usage:
 
