@@ -1,4 +1,4 @@
-# COVID19 Statistics
+# Checkers - Client & Server
 
 ## Description
 
