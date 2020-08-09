@@ -8,7 +8,7 @@ body {
   width: 100%;
 }
 
-button {
+input {
   background: cyan;
   padding: 10px;
   border-radius: 5px;
@@ -47,6 +47,10 @@ button {
   height: 80px;
   border-radius: 50%;
   position: absolute;
+}
+
+.piece:hover {
+  cursor: move;
 }
 
 .red {

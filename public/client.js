@@ -1,11 +1,4 @@
-const socket = io();
-
-socket.on("connection", console.log("connected new socket"));
-
-socket.on("welcome", (id) => {
-  console.log("Welcome:" + id);
-});
-
+// board setup
 var $board = $("#board");
 var offset = 10,
   counter = 0;
@@ -24,3 +17,48 @@ for (let i = 0; i < 64; i++) {
     }
   }
 }
+
+// move functionality
+function makeMove(turn) {
+  $(".piece").draggable({
+    containment: "#board",
+    grid: [100, 100],
+  });
+
+  // drop on light
+  $(".light").droppable({
+    drop: (event, ui) => {
+      ui.draggable.draggable("option", "revert", false);
+    },
+  });
+
+  // revert on black
+  $(".dark").droppable({
+    drop: (event, ui) => {
+      ui.draggable.draggable("option", "revert", true);
+    },
+  });
+
+  // return turn == "green" ? "red" : "green";
+}
+
+var turn = "green";
+makeMove(turn);
+
+// socket connection/communication
+const socket = io();
+
+socket.on("connection", console.log("connected new socket"));
+
+socket.on("welcome", (id) => {
+  console.log("Welcome:" + id);
+});
+
+var $button = $("#request-play");
+$button.on("click", () => {
+  $button.prop("value", "Searching...⏳");
+
+  socket.emit("search", socket.id);
+});
+
+socket.on("found", (message) => console.log(message));
