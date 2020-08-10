@@ -61,3 +61,11 @@ body {
 .green {
   background: green;
 }
+
+a {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  margin: 5px;
+}

@@ -1,19 +1,24 @@
 <%- include('header.ejs') %>
 
-<h1>Login</h1>
-<form action="/login" method="POST">
-  <div>
-    <label for="username">Username: </label>
-    <input type="text" id="username" name="username" />
-  </div>
-  <div>
-    <label for="password">Password: </label>
-    <input type="password" id="password" name="password" />
-  </div>
+  <body>
+    <h1>Login</h1>
+    <form action="/login" method="POST">
+      <div>
+        <label for="username">Username or Email: </label>
+        <input type="text" id="username" name="username" />
+      </div>
+      <div>
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password" />
+      </div>
+    
+      <button type="submit">Login</button>
+    </form>
 
-  <button type="submit">Login</button>
-</form>
+    <%if (message) { %>
+      <h3><%= message %></h3>
+    <% } %>
 
-<a href="/register">Register</a>
-
-<%- include('footer.ejs') %>
+    <a href="/register">Register</a>
+  </body>
+</html>

@@ -10,12 +10,11 @@ Attempt at making client-server communication using NodeJS and socket.io. The lo
 
 ## Usage:
 
-Visit https://github.com/lbragile/checkers-socket.io
+Visit https://lbragile-checkers.herokuapp.com/
 
 ## Todo
 
-- [ ] Fix logic so that both sides can move properly.
+- [x] Fix logic so that both sides can move properly (doesn't have to be correct logic of the game).
 - [ ] Login system (with sign up and email confirmation?) that stores data in the database.
 - [ ] Rating adjustments (optional)
 - [ ] Time per game (optional)
-

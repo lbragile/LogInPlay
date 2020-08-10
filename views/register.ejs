@@ -1,23 +1,33 @@
 <%- include('header.ejs') %>
 
-<h1>Register</h1>
-<form action="/register" method="POST">
-  <div>
-    <label for="username">Username: </label>
-    <input type="text" id="username" name="username" />
-  </div>
-  <div>
-    <label for="email">Email: </label>
-    <input type="email" id="email" name="email" />
-  </div>
-  <div>
-    <label for="password">Password: </label>
-    <input type="password" id="password" name="password" />
-  </div>
+  <body>
+    <h1>Register</h1>
+    <form  method="POST" action="/register">
+      <div>
+        <label for="username">Username: </label>
+        <input type="text" id="username" name="username" required/>
+      </div>
+      <div>
+        <label for="email">Email: </label>
+        <input type="email" id="email" name="email" required/>
+      </div>
+      <div>
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password" required/>
+      </div>
+    
+      <button type="submit">Register</button>
 
-  <button type="submit">Register</button>
-</form>
-
-<a href="/login">Login</a>
-
-<%- include('footer.ejs') %>
+      <%if (message) { %>
+        <h3><%= message %></h3>
+        <% if( message.includes("success") ) { %>
+          <script>
+            setTimeout(function() {window.location.replace("/login")}, 1000);
+          </script>
+        <% } %>
+      <% } %>
+    </form>
+    
+    <a href="/login">Login</a>
+  </body>
+</html>

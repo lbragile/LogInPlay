@@ -2,10 +2,14 @@ const express = require("express");
 const socket = require("socket.io");
 const path = require("path");
 const mysql = require("mysql");
+const bcrypt = require("bcrypt");
 
 require("dotenv").config();
 
 const app = express();
+
+app.use(express.json()); // for parsing application/json
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 var port = process.env.PORT || 3000;
 const server = app.listen(port, () => console.log(`listening on port ${port}`));
@@ -35,11 +39,73 @@ app.get("/", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-  res.render("login");
+  res.render("login", { message: "" });
 });
 
 app.get("/register", (req, res) => {
-  res.render("register");
+  res.render("register", { message: "" });
+});
+
+app.post("/register", (req, res) => {
+  const { username, email, password } = req.body;
+
+  db.query(
+    "SELECT * FROM users WHERE username = ? OR email = ?",
+    [username, email],
+    async (error, result) => {
+      if (error) {
+        console.log(error);
+      } else if (result.length > 0) {
+        let resp_message =
+          result[0].email == email
+            ? "That email already exists"
+            : "Username taken";
+        return res.render("register", {
+          message: resp_message,
+        });
+      }
+
+      let hash_password = await bcrypt.hash(password, 10);
+      let details = {
+        username,
+        email,
+        password: hash_password,
+      };
+      db.query("INSERT INTO users SET ?", details, (error, result) => {
+        if (error) {
+          console.log(error);
+        } else {
+          return res.render("register", {
+            message: "user successfully registered",
+          });
+        }
+      });
+    }
+  );
+});
+
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+
+  db.query(
+    "SELECT * FROM users WHERE username = ? OR email = ?",
+    [username, username],
+    async (error, result) => {
+      if (error) {
+        console.log(error);
+      } else if (result.length == 0) {
+        return res
+          .status(400)
+          .render("login", { message: "Incorrect Username/Email" });
+      } else if (!(await bcrypt.compare(password, result[0].password))) {
+        return res
+          .status(401)
+          .render("login", { message: "Incorrect Password" });
+      } else {
+        res.status(200).redirect("/");
+      }
+    }
+  );
 });
 
 var player_id = []; // increases when player presses 'play'
