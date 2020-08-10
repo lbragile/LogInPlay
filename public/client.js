@@ -73,10 +73,11 @@ socket.on("found", (data) => {
   }
 
   boardInit(color);
-  makeMove(color.first);
+  makeMove(color.first); // prevents other side from making a move
 
-  // alert(message);
   socket.emit("join", data.game_num); // join a room
+
+  // alert(data.message);
 });
 
 $(".piece").on("mouseup", function () {
