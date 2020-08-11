@@ -1,33 +1,42 @@
 <%- include('header.ejs') %>
 
   <body>
-    <h1>Register</h1>
-    <form  method="POST" action="/register">
-      <div>
-        <label for="username">Username: </label>
-        <input type="text" id="username" name="username" required/>
-      </div>
-      <div>
-        <label for="email">Email: </label>
-        <input type="email" id="email" name="email" required/>
-      </div>
-      <div>
-        <label for="password">Password: </label>
-        <input type="password" id="password" name="password" required/>
-      </div>
-    
-      <button type="submit">Register</button>
+    <div class="forms">
+      <h1>Register</h1>
+      <form  method="POST" action="/register">
+        <div>
+          <label for="username">Username: </label>
+          <input type="text" id="username" name="username" autocomplete="on" required/>
+        </div>
+        <div>
+          <label for="email">Email: </label>
+          <input type="email" id="email" name="email" autocomplete="on" required/>
+        </div>
+        <div>
+          <label for="password">Password: </label>
+          <input type="password" id="password" name="password" autocomplete="on" required/>
+        </div>
+        <div>
+          <label for="confirm_password">Confirm Password: </label>
+          <input type="password" id="confirm_password" name="confirm_password" autocomplete="on" required/>
+        </div>
 
-      <%if (message) { %>
-        <h3><%= message %></h3>
-        <% if( message.includes("success") ) { %>
-          <script>
-            setTimeout(function() {window.location.replace("/login")}, 1000);
-          </script>
+        <button type="submit">Register</button>
+
+        <%if (message) { %>
+          <h3><%= message %></h3>
+          <% if( message.includes("success") ) { %>
+            <script>
+              setTimeout(function() {window.location.replace("/login")}, 1000);
+            </script>
+          <% } %>
         <% } %>
-      <% } %>
-    </form>
-    
-    <a href="/login">Login</a>
+      </form>
+
+      <div class="links">
+        <a href="/login">Login</a>
+        <a href="/" class="home">Home</a>
+      </div>
+    </div>
   </body>
 </html>

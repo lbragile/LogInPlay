@@ -47,7 +47,7 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, confirm_password } = req.body;
 
   db.query(
     "SELECT * FROM users WHERE username = ? OR email = ?",
@@ -62,6 +62,10 @@ app.post("/register", (req, res) => {
             : "Username taken";
         return res.render("register", {
           message: resp_message,
+        });
+      } else if (password != confirm_password) {
+        return res.render("register", {
+          message: "Passwords do not match",
         });
       }
 
