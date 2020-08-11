@@ -3,6 +3,7 @@ const socket = require("socket.io");
 const path = require("path");
 const mysql = require("mysql");
 const bcrypt = require("bcrypt");
+var sessionstorage = require("sessionstorage");
 
 require("dotenv").config();
 
@@ -27,15 +28,21 @@ db.connect((error) => {
   if (error) {
     console.log(error);
   } else {
-    console.log("successfully connected mysql database");
+    console.log("Successfully connected mysql database");
   }
 });
 
-app.set("view engine", "ejs");
-app.use(express.static(path.join(__dirname, "public"))); // calls index.html which calls client.js at the end so io will be defined there
+var pwd_public = path.join(__dirname, "public");
+app.set("views", pwd_public); // change the views folder
+app.set("view engine", "ejs"); // set the engine
+app.use(express.static(pwd_public)); // use all files defined in public folder
 
 app.get("/", (req, res) => {
-  res.render("game");
+  if (sessionstorage.getItem("status") !== "loggedIn") {
+    res.render("game", { status: "loggedOut" });
+  } else {
+    res.render("game", { status: "loggedIn" });
+  }
 });
 
 app.get("/login", (req, res) => {
@@ -44,6 +51,11 @@ app.get("/login", (req, res) => {
 
 app.get("/register", (req, res) => {
   res.render("register", { message: "" });
+});
+
+app.get("/logout", (req, res) => {
+  sessionstorage.removeItem("status");
+  res.status(200).redirect("/");
 });
 
 app.post("/register", (req, res) => {
@@ -57,9 +69,7 @@ app.post("/register", (req, res) => {
         console.log(error);
       } else if (result.length > 0) {
         let resp_message =
-          result[0].email == email
-            ? "That email already exists"
-            : "Username taken";
+          result[0].email == email ? "Email already exists" : "Username taken";
         return res.render("register", {
           message: resp_message,
         });
@@ -80,7 +90,7 @@ app.post("/register", (req, res) => {
           console.log(error);
         } else {
           return res.render("register", {
-            message: "user successfully registered",
+            message: "User successfully registered",
           });
         }
       });
@@ -106,6 +116,7 @@ app.post("/login", (req, res) => {
           .status(401)
           .render("login", { message: "Incorrect Password" });
       } else {
+        sessionstorage.setItem("status", "loggedIn");
         res.status(200).redirect("/");
       }
     }
@@ -128,11 +139,11 @@ io.on("connection", (socket) => {
 
       io.to(player_id[num_players]).emit("found", {
         message: "Player found! You are green.",
-        game_num: game_num,
+        game_num,
       });
       io.to(player_id[num_players + 1]).emit("found", {
         message: "Player found! You are red.",
-        game_num: game_num,
+        game_num,
       });
 
       num_players += 2;

@@ -21,16 +21,17 @@
           <input type="password" id="confirm_password" name="confirm_password" autocomplete="on" required/>
         </div>
 
-        <button type="submit">Register</button>
-
         <%if (message) { %>
           <h3><%= message %></h3>
           <% if( message.includes("success") ) { %>
             <script>
+              document.querySelector(".forms h3").style.background = "#D4EDDA";
               setTimeout(function() {window.location.replace("/login")}, 1000);
             </script>
-          <% } %>
         <% } %>
+        <% } %>
+
+        <button type="submit">Register</button>
       </form>
 
       <div class="links">

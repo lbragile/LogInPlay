@@ -1,11 +1,13 @@
 <%- include('header.ejs') %>
 
   <body>
-    <a href="/">Home</a>
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
-    
-    <input type="button" value="Play" id="request-play" />
+    <%if (status != "loggedIn") { %>
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    <% } else {%>
+      <a href="/logout">Logout</a>
+      <input type="button" value="Play" id="request-play" />
+    <% } %>
     
     <div id="board">
       <div id="row1" class="row">
@@ -121,7 +123,6 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 
-    
     <script src="/socket.io/socket.io.js"></script>
     <script src="./client.js"></script>
   </body>

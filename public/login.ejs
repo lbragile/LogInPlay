@@ -10,16 +10,16 @@
         </div>
         <div>
           <label for="password">Password: </label>
-          <input type="password" id="password" name="password" autocomplete="on" required/>
+          <input type="password" id="password" name="password" autocomplete="off" required/>
         </div>
-      
+        
+        <%if (message) { %>
+          <h3><%= message %></h3>
+        <% } %>
+
         <button type="submit">Login</button>
       </form>
 
-      <%if (message) { %>
-        <h3><%= message %></h3>
-      <% } %>
-      
       <div class="links">
         <a href="/register">Register</a>
         <a href="/" class="home">Home</a>
