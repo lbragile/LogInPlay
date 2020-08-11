@@ -25,6 +25,10 @@ body {
   position: relative;
 }
 
+#board div {
+  width: 100%;
+}
+
 .square {
   width: 100px;
   height: 100px;
@@ -44,7 +48,7 @@ body {
 }
 
 .piece {
-  width: 80px;
+  width: 80px !important;
   height: 80px;
   border-radius: 50%;
   position: absolute;
@@ -70,7 +74,7 @@ a {
   justify-content: center;
   margin: 5px;
   text-decoration: none;
-  max-width: 50px;
+  max-width: 60px;
 }
 
 a:visited {
@@ -79,8 +83,9 @@ a:visited {
 
 .forms {
   position: absolute;
-  left: 40%;
-  top: 20%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .forms h1 {
@@ -95,6 +100,7 @@ a:visited {
 .forms label {
   display: table-cell;
   text-align: right;
+  white-space: nowrap;
 }
 
 .forms input {
@@ -138,9 +144,9 @@ a:visited {
   justify-content: flex-end;
 }
 
-.forms .links .home {
-  border-left: solid 1px black;
-  padding-left: 10px;
+.forms a {
+  padding: 0;
+  margin: 0;
 }
 
 /* only appear if error is made  */
@@ -162,72 +168,45 @@ a:visited {
 
 @media screen and (max-width: 1200px) {
   #board {
-    width: 75%;
-  }
-
-  #board div {
-    width: 100%;
+    width: 640px;
   }
 
   .square {
-    height: 100px;
+    height: 80px;
   }
 
   .piece {
     width: 60px !important;
     height: 60px;
   }
-
-  .forms {
-    left: 35%;
-    top: 30%;
-  }
 }
 
 @media screen and (max-width: 992px) {
   #board {
-    width: 75%;
-  }
-
-  #board div {
-    width: 100%;
+    width: 560px;
   }
 
   .square {
-    height: 50px;
+    height: 70px;
   }
 
   .piece {
-    width: 40px !important;
-    height: 40px;
-  }
-
-  .forms {
-    left: 30%;
-    top: 25%;
+    width: 52.5px !important;
+    height: 52.5px;
   }
 }
 
 @media screen and (max-width: 600px) {
   #board {
-    width: 75%;
-  }
-
-  #board div {
-    width: 100%;
+    width: 360px;
   }
 
   .square {
-    height: 50px;
+    height: 45px;
   }
 
   .piece {
-    width: 25px !important;
-    height: 25px;
-  }
-
-  .forms {
-    left: 10%;
-    top: 25%;
+    width: 33.75px !important;
+    height: 33.75px;
   }
 }

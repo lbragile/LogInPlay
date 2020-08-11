@@ -1,13 +1,8 @@
 <%- include('header.ejs') %>
 
   <body>
-    <%if (status != "loggedIn") { %>
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
-    <% } else {%>
-      <a href="/logout">Logout</a>
-      <input type="button" value="Play" id="request-play" />
-    <% } %>
+    <a href="/logout">Logout</a>
+    <input type="button" value="Play" id="request-play" />
     
     <div id="board">
       <div id="row1" class="row">

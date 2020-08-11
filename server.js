@@ -3,14 +3,15 @@ const socket = require("socket.io");
 const path = require("path");
 const mysql = require("mysql");
 const bcrypt = require("bcrypt");
-var sessionstorage = require("sessionstorage");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
 
 const app = express();
-
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(cookieParser());
 
 var port = process.env.PORT || 3000;
 const server = app.listen(port, () => console.log(`listening on port ${port}`));
@@ -38,24 +39,50 @@ app.set("view engine", "ejs"); // set the engine
 app.use(express.static(pwd_public)); // use all files defined in public folder
 
 app.get("/", (req, res) => {
-  if (sessionstorage.getItem("status") !== "loggedIn") {
-    res.render("game", { status: "loggedOut" });
-  } else {
-    res.render("game", { status: "loggedIn" });
-  }
+  jwt.verify(
+    req.cookies[process.env.SECRET_TOKEN_NAME],
+    process.env.SECRET_TOKEN,
+    (error, data) => {
+      if (error) {
+        res.render("login", { message: "" });
+      } else {
+        res.render("game");
+      }
+    }
+  );
 });
 
 app.get("/login", (req, res) => {
-  res.render("login", { message: "" });
+  jwt.verify(
+    req.cookies[process.env.SECRET_TOKEN_NAME],
+    process.env.SECRET_TOKEN,
+    (error, data) => {
+      if (error) {
+        res.render("login", { message: "" });
+      } else {
+        res.render("game");
+      }
+    }
+  );
 });
 
 app.get("/register", (req, res) => {
-  res.render("register", { message: "" });
+  jwt.verify(
+    req.cookies[process.env.SECRET_TOKEN_NAME],
+    process.env.SECRET_TOKEN,
+    (error, data) => {
+      if (error) {
+        res.render("register", { message: "" });
+      } else {
+        res.render("game");
+      }
+    }
+  );
 });
 
 app.get("/logout", (req, res) => {
-  sessionstorage.removeItem("status");
-  res.status(200).redirect("/");
+  res.cookie("access_token", "", { maxAge: -1 });
+  res.status(302).redirect("/login");
 });
 
 app.post("/register", (req, res) => {
@@ -116,8 +143,13 @@ app.post("/login", (req, res) => {
           .status(401)
           .render("login", { message: "Incorrect Password" });
       } else {
-        sessionstorage.setItem("status", "loggedIn");
-        res.status(200).redirect("/");
+        var token = jwt.sign({ username }, process.env.SECRET_TOKEN);
+        res.cookie("access_token", token, {
+          httpOnly: true,
+          maxAge: 1000 * 60 * 60 * 24, // 1 day
+          signed: false,
+        });
+        res.status(302).redirect("/");
       }
     }
   );
