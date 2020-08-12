@@ -4,67 +4,47 @@
   box-sizing: border-box;
 }
 
+table {
+  border-collapse: collapse;
+}
+
+td {
+  background-color: black;
+  border: 3px solid white;
+  font-size: 80px;
+  color: #ffffff;
+  border-radius: 10px 10px 10px 10px;
+}
+
 body {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-#request-play {
-  background: cyan;
-  padding: 10px;
+button {
+  margin: 15px 0;
+  padding: 7px;
+  float: right;
+  cursor: pointer;
+  background: #007bff;
+  color: white;
   border-radius: 5px;
-  display: block;
-  margin: auto;
+  font-size: 1rem;
+  border: none;
 }
 
-#board {
-  width: 800px;
-  margin: 10px auto;
-  background: red;
-  border: 1px solid black;
-  position: relative;
+button:hover {
+  background: #0069d9;
 }
 
-#board div {
-  width: 100%;
+button:focus {
+  outline: 0;
 }
 
-.square {
-  width: 100px;
-  height: 100px;
-}
-
-.dark {
-  background: rgb(19, 19, 19);
-}
-
-.light {
-  background: rgb(241, 241, 241);
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-}
-
-.piece {
-  width: 80px !important;
-  height: 80px;
-  border-radius: 50%;
-  position: absolute;
-  display: none;
-}
-
-.piece:hover {
-  cursor: move;
-}
-
-.red {
-  background: red;
-}
-
-.green {
-  background: green;
+p {
+  text-align: center;
+  padding: 5px;
+  font-size: 1.2rem;
 }
 
 a {
@@ -79,6 +59,27 @@ a {
 
 a:visited {
   color: blue;
+}
+
+#game {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#request-play {
+  float: none;
+  display: block;
+  margin: 0 auto;
+}
+
+#new-game {
+  background: #6c6e6e;
+}
+
+#new-game:hover {
+  background: #5a6268;
 }
 
 .forms {
@@ -119,22 +120,6 @@ a:visited {
   border: 1px solid rgba(81, 203, 238, 1);
 }
 
-.forms button {
-  margin: 15px 0;
-  padding: 7px;
-  float: right;
-  cursor: pointer;
-  background: #007bff;
-  color: white;
-  border-radius: 5px;
-  font-size: 1rem;
-  border: none;
-}
-
-.forms button:hover {
-  background: #0069d9;
-}
-
 .forms .links {
   text-decoration: none;
   clear: right;
@@ -166,47 +151,6 @@ a:visited {
   transform: translate(-50%, -50%);
 } */
 
-@media screen and (max-width: 1200px) {
-  #board {
-    width: 640px;
-  }
+/* @media screen and (max-width: 1200px) {
 
-  .square {
-    height: 80px;
-  }
-
-  .piece {
-    width: 60px !important;
-    height: 60px;
-  }
-}
-
-@media screen and (max-width: 992px) {
-  #board {
-    width: 560px;
-  }
-
-  .square {
-    height: 70px;
-  }
-
-  .piece {
-    width: 52.5px !important;
-    height: 52.5px;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  #board {
-    width: 360px;
-  }
-
-  .square {
-    height: 45px;
-  }
-
-  .piece {
-    width: 33.75px !important;
-    height: 33.75px;
-  }
-}
+} */

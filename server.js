@@ -170,12 +170,14 @@ io.on("connection", (socket) => {
       game_num++;
 
       io.to(player_id[num_players]).emit("found", {
-        message: "Player found! You are green.",
+        message: "Player found, you are X.\nYou go first!",
         game_num,
+        player: "X",
       });
       io.to(player_id[num_players + 1]).emit("found", {
-        message: "Player found! You are red.",
+        message: "Player found, you are O.",
         game_num,
+        player: "O",
       });
 
       num_players += 2;
@@ -186,9 +188,14 @@ io.on("connection", (socket) => {
     socket.join("game" + room_num);
   });
 
-  socket.on("move", (piece_coords) => {
+  socket.on("move", (data) => {
     var room = Object.values(socket.rooms)[1];
-    socket.broadcast.to(room).emit("position", piece_coords); // send a message to both clients in that room
+    io.in(room).emit("position", data); // send a message to both clients in that room
+  });
+
+  socket.on("new_game", () => {
+    var room = Object.values(socket.rooms)[1];
+    io.in(room).emit("restart"); // send a message to both clients in that room
   });
 
   socket.on("disconnect", function () {
