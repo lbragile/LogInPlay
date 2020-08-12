@@ -26,10 +26,14 @@
           <% if( message.includes("success") ) { %>
             <script>
               document.querySelector(".forms h3").style.background = "#D4EDDA";
-              setTimeout(function() {window.location.replace("/login")}, 1000);
+              setTimeout(function() {window.location.replace("http://localhost:3000/login");}, 1000);
             </script>
-        <% } %>
-        <% } %>
+          <% } else if(message.includes("Verify")){ %>
+            <script>
+              document.querySelector(".forms h3").style.background = "#D1ECF1";
+            </script>
+          <% } %>
+        <% } %> 
 
         <button type="submit">Register</button>
       </form>

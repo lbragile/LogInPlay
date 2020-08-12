@@ -5,11 +5,12 @@ const mysql = require("mysql");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const nodemailer = require("nodemailer");
 
 require("dotenv").config();
 
 const app = express();
-app.use(express.json()); // for parsing application/json
+app.use(express.json({ limit: "1mb" })); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(cookieParser());
 
@@ -74,7 +75,21 @@ app.get("/register", (req, res) => {
       if (error) {
         res.render("register", { message: "" });
       } else {
-        res.render("game");
+        res.redirect("/login");
+      }
+    }
+  );
+});
+
+app.get("/register/:activationToken", (req, res) => {
+  jwt.verify(
+    req.params.activationToken,
+    process.env.VERIFICATION_TOKEN,
+    (error, data) => {
+      if (error) {
+        res.redirect("/register");
+      } else {
+        res.redirect("/login");
       }
     }
   );
@@ -116,8 +131,46 @@ app.post("/register", (req, res) => {
         if (error) {
           console.log(error);
         } else {
+          let my_email = process.env.EMAIL;
+          var transporter = nodemailer.createTransport({
+            service: "Gmail",
+            auth: {
+              user: my_email,
+              pass: process.env.EMAIL_PASS,
+            },
+          });
+
+          var expire = 5;
+          var activation_token = jwt.sign(
+            { username },
+            process.env.VERIFICATION_TOKEN,
+            { expiresIn: `${expire}m` }
+          );
+
+          var link_url = `${process.env.URL}/register/${activation_token}`;
+
+          var mailOptions = {
+            from: my_email,
+            to: email,
+            subject: "Activate your account!",
+            html: `<p>Hi ${username},<br/><br/>
+            Thank you for registering!<br/>
+            Please verify your email by clicking this link (paste into url bar if cannot click), which will expire in ${expire} minutes:<br/><br/>
+            <a href="${link_url}">${link_url}</a><br/><br/>
+            Enjoy the tic-tac-toe game and have a good day!<br/><br/>Cheer,<br/>Lior Brag</p>`,
+          };
+
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log("Email sent: " + info.response);
+            }
+          });
+
+          transporter.close();
           return res.render("register", {
-            message: "User successfully registered",
+            message: "Verify your email.",
           });
         }
       });
