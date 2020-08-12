@@ -21,7 +21,7 @@ socket.on("found", (data) => {
   alert(data.message);
 });
 
-$("td").on("mouseup touchend", function () {
+$("td").on("click touchstart", function () {
   if ($("#turn").html().split(" ")[1] == socket.player) {
     setTimeout(() => {
       let piece_coords = [];
@@ -51,7 +51,7 @@ socket.on("position", (data) => {
 });
 
 // new game for both clients in the room
-$("#new-game").on("click", function () {
+$("#new-game").on("click touchstart", function () {
   socket.emit("new_game");
 });
 

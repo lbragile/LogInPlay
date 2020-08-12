@@ -6,11 +6,11 @@
       <form action="/login" method="POST">
         <div>
           <label for="username">Username or Email: </label>
-          <input type="text" id="username" name="username" autocomplete="on" required/>
+          <input type="text" id="username" name="username" placeholder="example@email.com" autocomplete="on" required/>
         </div>
         <div>
           <label for="password">Password: </label>
-          <input type="password" id="password" name="password" autocomplete="off" required/>
+          <input type="password" id="password" name="password" placeholder="secure_pass!" autocomplete="off" required/>
         </div>
         
         <%if (message) { %>

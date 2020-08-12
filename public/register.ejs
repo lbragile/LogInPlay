@@ -6,19 +6,19 @@
       <form  method="POST" action="/register">
         <div>
           <label for="username">Username: </label>
-          <input type="text" id="username" name="username" autocomplete="on" required/>
+          <input type="text" id="username" name="username" placeholder="JohnDoe" autocomplete="on" required/>
         </div>
         <div>
           <label for="email">Email: </label>
-          <input type="email" id="email" name="email" autocomplete="on" required/>
+          <input type="email" id="email" name="email" placeholder="example@email.com" autocomplete="on" required/>
         </div>
         <div>
           <label for="password">Password: </label>
-          <input type="password" id="password" name="password" autocomplete="on" required/>
+          <input type="password" id="password" name="password" placeholder="secure_pass!" autocomplete="off" required/>
         </div>
         <div>
           <label for="confirm_password">Confirm Password: </label>
-          <input type="password" id="confirm_password" name="confirm_password" autocomplete="on" required/>
+          <input type="password" id="confirm_password" name="confirm_password" placeholder="secure_pass!" autocomplete="off" required/>
         </div>
 
         <%if (message) { %>
@@ -30,7 +30,7 @@
             </script>
           <% } else if(message.includes("Verify")){ %>
             <script>
-              document.querySelector(".forms h3").style.background = "#D1ECF1";
+              document.querySelector(".forms h3").style.background = "#E2E3E5";
             </script>
           <% } %>
         <% } %> 

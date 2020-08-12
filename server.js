@@ -147,17 +147,17 @@ app.post("/register", (req, res) => {
             { expiresIn: `${expire}m` }
           );
 
-          var link_url = `${process.env.URL}/register/${activation_token}`;
+          var link_url = `http://${process.env.URL}/register/${activation_token}`;
 
           var mailOptions = {
-            from: my_email,
+            from: process.env.FROM,
             to: email,
-            subject: "Activate your account!",
-            html: `<p>Hi ${username},<br/><br/>
-            Thank you for registering!<br/>
-            Please verify your email by clicking this link (paste into url bar if cannot click), which will expire in ${expire} minutes:<br/><br/>
+            subject: "Activate your account! 🔐",
+            html: `<p>Hi ${username}, 👋<br/><br/>
+            Thank you for registering! 🥰<br/>
+            Please verify your email by clicking this link (paste into url bar if cannot click), which will expire in ${expire} minutes: ✅<br/><br/>
             <a href="${link_url}">${link_url}</a><br/><br/>
-            Enjoy the tic-tac-toe game and have a good day!<br/><br/>Cheer,<br/>Lior Brag</p>`,
+            Enjoy the tic-tac-toe game and have a good day!<br/><br/>Cheers 🥂,<br/>Lior</p>`,
           };
 
           transporter.sendMail(mailOptions, function (error, info) {
